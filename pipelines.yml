@@ -1,6 +1,9 @@
 trigger:
 - main
 
+pool:
+  name: Default
+
 variables:
   - name: aws_access_key_id
     value: $(access-key)
@@ -33,6 +36,6 @@ jobs:
 
   - script: |
       cd $(Build.SourcesDirectory)/_aws-ec2-terraform-AzureDevops
-      terraform apply -auto-approve \
+      terraform apply -auto-approve
     displayName: 'Terraform Apply'
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
