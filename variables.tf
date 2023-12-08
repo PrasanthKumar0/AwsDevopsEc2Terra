@@ -14,11 +14,6 @@ variable "availability_zone" {
   default     = "ap-south-1a"  
 }
 
-variable "iam_instance_profile" {
-  description = "EC2 instance IAM instance profile name"
-  default     = "prash"  
-}
-
 variable "key_name" {
   description = "EC2 instance key pair name"
   default     = "jpass"  
