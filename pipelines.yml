@@ -12,6 +12,8 @@ variables:
 
 jobs:
 - job: deploy_infrastructure
+  strategy:
+    parallel: 1
   steps:
   - task: UseDotNet@2
     inputs:
@@ -42,6 +44,8 @@ jobs:
 
 - job: deploy_additional_steps
   dependsOn: deploy_infrastructure
+  strategy:
+    parallel: 1
   steps:
   # Add additional steps or tasks that should run sequentially after the infrastructure deployment.
   - script: echo 'Additional steps after infrastructure deployment.'
