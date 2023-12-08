@@ -12,15 +12,13 @@ variables:
 
 jobs:
 - job: deploy_infrastructure
-  strategy:
-    parallel: 1
   steps:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
       version: '2.1.x'
       installationPath: $(Agent.ToolsDirectory)/dotnet
-
+      
   - script: |
       aws configure set aws_access_key_id $(access-key)
       aws configure set aws_secret_access_key $(secret-key)
@@ -38,15 +36,6 @@ jobs:
 
   - script: |
       cd $(Build.SourcesDirectory)/_aws-ec2-terraform-AzureDevops
-      terraform apply -auto-approve
+      terraform apply -auto-approve \
     displayName: 'Terraform Apply'
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-
-- job: deploy_additional_steps
-  dependsOn: deploy_infrastructure
-  strategy:
-    parallel: 1
-  steps:
-  # Add additional steps or tasks that should run sequentially after the infrastructure deployment.
-  - script: echo 'Additional steps after infrastructure deployment.'
-    displayName: 'Additional Steps'
